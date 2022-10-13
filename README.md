@@ -1,3 +1,6 @@
+### Demo VSCode Extension
+This is forked from https://github.com/microsoft/vscode-platform-specific-sample
+
 # VS Code Platform Specific Extension Sample
 
 [![CI](https://github.com/microsoft/vscode-platform-specific-sample/actions/workflows/ci.yml/badge.svg)](https://github.com/microsoft/vscode-platform-specific-sample/actions/workflows/ci.yml) 
