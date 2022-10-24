@@ -39,6 +39,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: ${{steps.download.outputs.download-path}}/artifact/demo-vscode-${{ github.ref_name }}.vsix
+          generate_release_notes: true
 
       - name: Release to VSCode Marketplace
         run: npx vsce publish --packagePath $(find . -iname *.vsix)
