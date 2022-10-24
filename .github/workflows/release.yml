@@ -47,7 +47,7 @@ jobs:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
       - name: Release to Open VSX
-        run: npx ovsx publish ./artifact/demo-vscode-${{ github.ref_name }}.vsix
+        run: npx ovsx publish ${{steps.download.outputs.download-path}}/artifact/demo-vscode-${{ github.ref_name }}.vsix
         continue-on-error: true
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT}}
