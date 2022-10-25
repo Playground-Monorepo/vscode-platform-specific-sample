@@ -44,4 +44,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
           destination_dir: ${{ secrets.AWS_FOLDER }}
-          source_dir: ./artifact/demo-vscode-${{ steps.short-sha.outputs.sha }}.vsix
+          source_dir: ./artifact/
