@@ -36,6 +36,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
 
+      - name: Check AWS CLI
+        run: aws --version
+
       - name: Upload to AWS S3
         uses: shallwefootball/s3-upload-action@master
         with:
