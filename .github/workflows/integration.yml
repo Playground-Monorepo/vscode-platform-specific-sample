@@ -31,7 +31,7 @@ jobs:
           path: "*.vsix"
 
   integration:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     needs: build
     steps:
       - uses: actions/download-artifact@v3
