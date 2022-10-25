@@ -26,3 +26,17 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: "*.vsix"
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+
+      - name: Release to AWS S3
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: ${{ secrets.AWS_BUCKET }}
+          destination_dir: ${{ secrets.AWS_FOLDER }}
+          source_dir: ./artifact/demo-vscode-${{ steps.short-sha.outputs.sha }}.vsix
