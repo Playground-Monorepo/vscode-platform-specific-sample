@@ -15,8 +15,6 @@ jobs:
           node-version: 14.x
 
       - run: npm install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Short GitHub SHA
         uses: benjlevesque/short-sha@v2.0
