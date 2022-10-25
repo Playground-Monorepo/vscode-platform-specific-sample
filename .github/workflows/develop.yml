@@ -1,0 +1,30 @@
+name: Release Based on Develop Branch
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+
+      - run: npm install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Short GitHub SHA
+        uses: benjlevesque/short-sha@v2.0
+        id: short-sha
+
+      - name: Build vsix
+        run: npx vsce package ${{ steps.short-sha.outputs.sha }} --no-git-tag-version -o demo-vscode-${{ steps.short-sha.outputs.sha }}.vsix
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: "*.vsix"
