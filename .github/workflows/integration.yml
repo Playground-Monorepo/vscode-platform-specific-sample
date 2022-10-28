@@ -20,7 +20,7 @@ jobs:
       - name: Set Version
         id: version
         run: |
-          packageVersion=$(npm pkg get version | sed 's/"//g')
+          packageVersion=$(npx -c 'echo "$npm_package_version"')
           shortSHA=$(git rev-parse --short ${{ github.sha }})
           echo "::set-output name=version::$packageVersion-$shortSHA"
 
