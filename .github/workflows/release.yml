@@ -50,7 +50,7 @@ jobs:
       - uses: actions/download-artifact@v3
 
       - name: Release to GitHub
-        uses: Playground-Monorepo/action-gh-release@v1 # forked from softprops/action-gh-release@v1
+        uses: Playground-Monorepo/action-gh-release@cd28b0f # forked from softprops/action-gh-release@v1
         with:
           files: ./artifact/demo-vscode-${{ github.ref_name }}.vsix
           generate_release_notes: true
