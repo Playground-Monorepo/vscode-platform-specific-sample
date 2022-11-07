@@ -55,35 +55,6 @@ jobs:
           files: ./artifact/demo-vscode-${{ github.ref_name }}.vsix
           generate_release_notes: true
 
-      # - name: Release to GitHub
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: ./artifact/demo-vscode-${{ github.ref_name }}.vsix
-      #     generate_release_notes: true
-
-      # - name: Create GitHub Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   continue-on-error: true # ignore error in case the release exists
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ github.ref_name }}
-      #     release_name: ${{ github.ref_name }}
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Upload Asset to GitHub Release
-      #   id: upload-release-asset 
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_name: demo-vscode-${{ github.ref_name }}.vsix
-      #     asset_path: ./artifact/demo-vscode-${{ github.ref_name }}.vsix
-      #     asset_content_type: application/octet-stream
-
       - name: Release to VSCode Marketplace
         run: npx vsce publish --packagePath $(find . -iname *.vsix)
         env:
