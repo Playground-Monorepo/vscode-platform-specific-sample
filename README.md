@@ -1,5 +1,5 @@
 ### Demo VSCode Extension
-This is forked from https://github.com/microsoft/vscode-platform-specific-sample for testing.........
+This is forked from https://github.com/microsoft/vscode-platform-specific-sample for testing.............
 
 # VS Code Platform Specific Extension Sample
 
