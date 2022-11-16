@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   pull_request_target:
-    types: [closed]
+    types: [opened, edited, reopened, synchronize, review_requested, assigned, closed]
     branches: [main]
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: "*.vsix"
-          
+
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
