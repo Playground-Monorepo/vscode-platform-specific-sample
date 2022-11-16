@@ -1,12 +1,28 @@
 name: Integration
 on:
   push:
-    branches: [main]
   pull_request_target:
-    types: [opened, edited, reopened, synchronize, review_requested, assigned, closed]
+    types: [opened, edited, reopened, synchronize, review_requested, assigned]
     branches: [main]
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get current branch
+        id: check_branch
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw##*/}
+          echo "branch=$branch" >> $GITHUB_OUTPUT
+          echo "Current Branch is $branch."
+    outputs:
+      branch: ${{ steps.check_branch.outputs.branch }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -32,25 +48,19 @@ jobs:
         with:
           path: "*.vsix"
 
-  if_merged:
-    if: github.event.pull_request.merged == true
+  integration:
+    if: needs.check.outputs.branch == 'main'
     runs-on: ubuntu-latest
+    needs: [check, build]
     steps:
-    - run: |
-        echo The PR was merged
+      - uses: actions/download-artifact@v3
 
-  # integration:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/download-artifact@v3
+      - name: Check AWS CLI
+        run: aws --version
 
-  #     - name: Check AWS CLI
-  #       run: aws --version
-
-  #     - name: Upload to AWS S3 via CLI
-  #       run: aws s3 sync ./artifact s3://${{ secrets.AWS_BUCKET }}/${{ secrets.AWS_FOLDER }} --debug
-  #       env:
-  #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         AWS_DEFAULT_REGION: us-west-2
+      - name: Upload to AWS S3 via CLI
+        run: aws s3 sync ./artifact s3://${{ secrets.AWS_BUCKET }}/${{ secrets.AWS_FOLDER }} --debug
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-west-2
