@@ -39,8 +39,7 @@ jobs:
         id: version
         run: |
           packageVersion=$(npx -c 'echo "$npm_package_version"')
-          shortSHA=$(git rev-parse --short ${{ github.sha }})
-          echo "version=$packageVersion-$shortSHA" >> $GITHUB_OUTPUT
+          echo "version=$packageVersion" >> $GITHUB_OUTPUT
 
       - name: Build vsix
         run: npx vsce package ${{ steps.version.outputs.version }} --no-git-tag-version -o demo-vscode-${{ steps.version.outputs.version }}.vsix --pre-release
